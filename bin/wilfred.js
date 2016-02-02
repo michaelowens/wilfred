@@ -111,6 +111,12 @@ var Wilfred = function () {
     }, {
         key: 'add',
         value: function add(options) {
+            if (this.config.boilerplates.filter(function (bp) {
+                return bp.boilerplate === options.boilerplate;
+            }).length) {
+                return console.error(options.boilerplate, 'already exists!');
+            }
+
             this.config.boilerplates.push(options);
             _fsExtra2.default.writeFile(CONFIG_PATH, JSON.stringify(this.config, null, '  '), function (err) {
                 if (err) throw err;
