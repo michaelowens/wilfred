@@ -37,7 +37,7 @@ var DEFAULT_CONFIG = {
     boilerplates: []
 };
 
-_commander2.default.version(PKG.version).usage('[options] [boilerplate name] [location]').option('-a, --add', 'Save given path as boilerplate').option('-f, --force', 'Force copying the boilerplate to destination').option('-l, --list', 'Returns the list of boilerplates').option('-s, --silent', 'Run in silent mode (requires passing at least boilerplate parameter)').parse(process.argv);
+_commander2.default.version(PKG.version).usage('[options] [boilerplate name] [location]').option('-a, --add', 'Save given path as boilerplate').option('-f, --force', 'Force copying the boilerplate to destination').option('-l, --list', 'Returns the list of boilerplates').option('-r, --remove', 'Remove boilerplate by name').option('-s, --silent', 'Run in silent mode (requires passing at least boilerplate parameter)').parse(process.argv);
 
 var Wilfred = function () {
     function Wilfred(config) {
@@ -45,10 +45,19 @@ var Wilfred = function () {
 
         this.config = config;
 
+        if (this.config.boilerplates.length <= 0 && (_commander2.default.remove || _commander2.default.add || _commander2.default.list)) {
+            console.log('No boilerplates added. For more usage info run: ' + PKG.name + ' --help');
+            return;
+        }
+
         if (_commander2.default.list) {
             return this.config.boilerplates.map(function (bp) {
                 return console.log(bp.boilerplate, '-', bp.path);
             });
+        }
+
+        if (_commander2.default.remove) {
+            return this.remove();
         }
 
         if (_commander2.default.add) {
@@ -62,11 +71,6 @@ var Wilfred = function () {
                 default: process.cwd()
             }];
         } else {
-            if (this.config.boilerplates.length <= 0) {
-                console.log('No boilerplates added. For more usage info run: ' + PKG.name + ' --help');
-                return;
-            }
-
             this.questions = [{
                 name: 'boilerplate',
                 message: 'Select a boilerplate:',
@@ -150,6 +154,37 @@ var Wilfred = function () {
                     }
                 });
             });
+        }
+    }, {
+        key: 'remove',
+        value: function remove() {
+            var _this2 = this;
+
+            var execRemove = function execRemove(name) {
+                _this2.config.boilerplates = _this2.config.boilerplates.filter(function (bp) {
+                    return bp.boilerplate !== name;
+                });
+                _fsExtra2.default.writeFile(CONFIG_PATH, JSON.stringify(_this2.config, null, '  '), function (err) {
+                    if (err) throw err;
+                    console.log(name, 'removed from boilerplates!');
+                });
+            };
+
+            if (!_commander2.default.args[0]) {
+                _inquirer2.default.prompt([{
+                    name: 'boilerplate',
+                    message: 'What boilerplate do you want to remove?',
+                    type: 'list',
+                    choices: this.config.boilerplates.map(function (bp) {
+                        return bp.boilerplate;
+                    }) || [],
+                    default: ''
+                }], function (answers) {
+                    return execRemove(answers.boilerplate);
+                });
+            } else {
+                return execRemove(_commander2.default.args[0]);
+            }
         }
     }]);
 
