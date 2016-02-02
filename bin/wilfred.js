@@ -37,7 +37,7 @@ var DEFAULT_CONFIG = {
     boilerplates: []
 };
 
-_commander2.default.version(PKG.version).usage('[options] [boilerplate name] [location]').option('-a, --add', 'Save given path as boilerplate').option('-f, --force', 'Force copying the boilerplate to destination').option('-l, --list', 'Returns the list of boilerplates').option('-s, --silent', 'Run in silent mode (requires passing at least boilerplate paramater)').parse(process.argv);
+_commander2.default.version(PKG.version).usage('[options] [boilerplate name] [location]').option('-a, --add', 'Save given path as boilerplate').option('-f, --force', 'Force copying the boilerplate to destination').option('-l, --list', 'Returns the list of boilerplates').option('-s, --silent', 'Run in silent mode (requires passing at least boilerplate parameter)').parse(process.argv);
 
 var Wilfred = function () {
     function Wilfred(config) {
@@ -74,7 +74,7 @@ var Wilfred = function () {
                 choices: this.config.boilerplates.map(function (bp) {
                     return bp.boilerplate;
                 }) || [],
-                default: _commander2.default.args[0] || ''
+                default: _commander2.default.args[0] || this.config.boilerplates[0].boilerplate
             }, {
                 name: 'path',
                 message: 'Select a path',
@@ -130,12 +130,13 @@ var Wilfred = function () {
                 return console.log('Boilerplate not found...');
             }
 
-            if (_commander2.default.force) {
-                return execCopy(bp.path, options.path);
-            }
-
             _fsExtra2.default.readdir(options.path, function (err, items) {
-                if (!items.length) {
+                if (err) {
+                    _fsExtra2.default.mkdirSync(options.path);
+                    items = [];
+                }
+
+                if (_commander2.default.force || !items.length) {
                     return execCopy(bp.path, options.path);
                 }
 
