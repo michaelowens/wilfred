@@ -37,13 +37,19 @@ var DEFAULT_CONFIG = {
     boilerplates: []
 };
 
-_commander2.default.version(PKG.version).usage('[options] [boilerplate name] [location]').option('-a, --add', 'Save given path as boilerplate').option('-f, --force', 'Force copying the boilerplate to destination').option('-s, --silent', 'Run in silent mode (requires passing at least boilerplate paramater)').parse(process.argv);
+_commander2.default.version(PKG.version).usage('[options] [boilerplate name] [location]').option('-a, --add', 'Save given path as boilerplate').option('-f, --force', 'Force copying the boilerplate to destination').option('-l, --list', 'Returns the list of boilerplates').option('-s, --silent', 'Run in silent mode (requires passing at least boilerplate paramater)').parse(process.argv);
 
 var Wilfred = function () {
     function Wilfred(config) {
         _classCallCheck(this, Wilfred);
 
         this.config = config;
+
+        if (_commander2.default.list) {
+            return this.config.boilerplates.map(function (bp) {
+                return console.log(bp.boilerplate, '-', bp.path);
+            });
+        }
 
         if (_commander2.default.add) {
             this.questions = [{
