@@ -1,8 +1,8 @@
 # Wilfred
 
-![Wilfred](preview.png)
-
 A local boilerplate manager. Add folders as boilerplates and initialize projects from them using your terminal.
+
+![Wilfred](preview.png)
 
 ## Installation
 
