@@ -177,7 +177,9 @@ var Wilfred = function () {
             _fsExtra2.default.stat(HOOK, function (err) {
                 if (err) return;
 
-                var cmd = (0, _child_process.spawn)('bash', [HOOK]),
+                var cmd = (0, _child_process.spawn)('bash', [HOOK], {
+                    cwd: dest
+                }),
                     output = [],
                     hookError = false;
 
