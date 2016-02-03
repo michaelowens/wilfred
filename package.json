@@ -12,7 +12,12 @@
     "compile": "babel -d bin/ lib/",
     "prepublish": "npm run compile"
   },
-  "keywords": ["boilerplate", "local", "kickstart", "wireframe"],
+  "keywords": [
+    "boilerplate",
+    "local",
+    "kickstart",
+    "wireframe"
+  ],
   "author": "Michael Owens <michaelowensnl@gmail.com> (http://michaelowens.nl)",
   "license": "MIT",
   "repository": {
@@ -20,9 +25,10 @@
     "url": "https://github.com/michaelowens/wilfred.git"
   },
   "bugs": {
-    "url" : "https://github.com/michaelowens/wilfred/issues"
+    "url": "https://github.com/michaelowens/wilfred/issues"
   },
   "dependencies": {
+    "colors": "1.1.2",
     "commander": "2.9.0",
     "fs-extra": "0.26.5",
     "inquirer": "0.11.4"

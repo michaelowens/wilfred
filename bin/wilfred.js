@@ -15,6 +15,12 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _colors = require('colors');
+
+var _colors2 = _interopRequireDefault(_colors);
+
+var _child_process = require('child_process');
+
 var _fsExtra = require('fs-extra');
 
 var _fsExtra2 = _interopRequireDefault(_fsExtra);
@@ -126,6 +132,8 @@ var Wilfred = function () {
     }, {
         key: 'copy',
         value: function copy(options) {
+            var _this2 = this;
+
             var bp = this.config.boilerplates.find(function (item) {
                 return item.boilerplate === options.boilerplate;
             }),
@@ -133,6 +141,7 @@ var Wilfred = function () {
                 _fsExtra2.default.copy(from, to, function (err) {
                     if (err) return console.error(err);
                     console.log('Boilerplate copied to destination!');
+                    _this2.postCopy(to);
                 });
             };
 
@@ -162,15 +171,41 @@ var Wilfred = function () {
             });
         }
     }, {
+        key: 'postCopy',
+        value: function postCopy(dest) {
+            var HOOK = _path2.default.join(dest, '.' + PKG.name + 'hook');
+            _fsExtra2.default.stat(HOOK, function (err) {
+                if (err) return;
+
+                var cmd = (0, _child_process.spawn)('bash', [HOOK]),
+                    output = [],
+                    hookError = false;
+
+                cmd.stdout.on('data', function (chunk) {
+                    process.stdout.write('[.' + PKG.name + 'hook] ' + chunk);
+                });
+
+                cmd.stderr.on('data', function (chunk) {
+                    process.stderr.write(chunk.toString());
+                });
+
+                cmd.on('close', function (code, signal) {
+                    if (code > 0) {
+                        console.error(('An error occured while running .' + PKG.name + 'hook').red);
+                    }
+                });
+            });
+        }
+    }, {
         key: 'remove',
         value: function remove() {
-            var _this2 = this;
+            var _this3 = this;
 
             var execRemove = function execRemove(name) {
-                _this2.config.boilerplates = _this2.config.boilerplates.filter(function (bp) {
+                _this3.config.boilerplates = _this3.config.boilerplates.filter(function (bp) {
                     return bp.boilerplate !== name;
                 });
-                _fsExtra2.default.writeFile(CONFIG_PATH, JSON.stringify(_this2.config, null, '  '), function (err) {
+                _fsExtra2.default.writeFile(CONFIG_PATH, JSON.stringify(_this3.config, null, '  '), function (err) {
                     if (err) throw err;
                     console.log(name, 'removed from boilerplates!');
                 });
