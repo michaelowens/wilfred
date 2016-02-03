@@ -23,6 +23,7 @@ For more information on how to use wilfred run `wilfred --help`
 - [x] `.wilfredhook` for running commands after copy
 - [ ] GitHub support
 - [ ] `.wilfredignore` for files to ignore during copy (maybe?)
+- [ ] Bash autocomplete
 
 <sub><sup><a name="footnote1">1</a>: If you pass in the boilerplate name as argument it will run non-interactive. If you don't it will run in interactive mode.</sup></sub>
 
