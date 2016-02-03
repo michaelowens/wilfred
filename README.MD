@@ -25,3 +25,23 @@ For more information on how to use wilfred run `wilfred --help`
 - [ ] `.wilfredignore` for files to ignore during copy (maybe?)
 
 <sub><sup><a name="footnote1">1</a>: If you pass in the boilerplate name as argument it will run non-interactive. If you don't it will run in interactive mode.</sup></sub>
+
+## Changelog
+
+### 0.1.4
+
+- Fix error when using wilfred without boilerplates added
+
+### 0.1.3
+
+- Add `-r / --remove` option to remove a boilerplate
+- Fix being able to add boilerplates with the same name
+
+### 0.1.2
+
+- Fix issue where first boilerplate was not automatically selected in interactive mode
+- Fix error when destination folder does not exist
+
+### 0.1.1
+
+- Add `-l / --list` option to get a list of all added boilerplates
