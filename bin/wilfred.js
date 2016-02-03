@@ -38,7 +38,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PKG = require('../package.json');
-var CONFIG_PATH = _path2.default.join(_os2.default.homedir(), '.' + PKG.name + '.json');
+var HOMEDIR = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
+var CONFIG_PATH = _path2.default.join(HOMEDIR, '.' + PKG.name + '.json');
 var DEFAULT_CONFIG = {
     boilerplates: []
 };

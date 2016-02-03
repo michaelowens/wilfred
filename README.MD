@@ -28,6 +28,11 @@ For more information on how to use wilfred run `wilfred --help`
 
 ## Changelog
 
+### 0.1.6
+
+- Stop using os.homedir() for backwards compatibility
+- Fix issue where hook would run from parent directory when using wilfred to make project folder
+
 ### 0.1.5
 
 - Fix issue where `-s` did not silence all output
