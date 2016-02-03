@@ -52,13 +52,13 @@ var Wilfred = function () {
         this.config = config;
 
         if (this.config.boilerplates.length <= 0 && (_commander2.default.remove || !_commander2.default.add || _commander2.default.list)) {
-            console.log('No boilerplates added. For more usage info run: ' + PKG.name + ' --help');
+            !_commander2.default.silent && console.log('No boilerplates added. For more usage info run: ' + PKG.name + ' --help');
             return;
         }
 
         if (_commander2.default.list) {
             return this.config.boilerplates.map(function (bp) {
-                return console.log(bp.boilerplate, '-', bp.path);
+                return !_commander2.default.silent && console.log(bp.boilerplate, '-', bp.path);
             });
         }
 
@@ -120,13 +120,13 @@ var Wilfred = function () {
             if (this.config.boilerplates.filter(function (bp) {
                 return bp.boilerplate === options.boilerplate;
             }).length) {
-                return console.error(options.boilerplate, 'already exists!');
+                return !_commander2.default.silent && console.error(options.boilerplate, 'already exists!');
             }
 
             this.config.boilerplates.push(options);
             _fsExtra2.default.writeFile(CONFIG_PATH, JSON.stringify(this.config, null, '  '), function (err) {
                 if (err) throw err;
-                console.log(options.boilerplate, 'added as boilerplate!');
+                !_commander2.default.silent && console.log(options.boilerplate, 'added as boilerplate!');
             });
         }
     }, {
@@ -140,13 +140,13 @@ var Wilfred = function () {
                 execCopy = function execCopy(from, to) {
                 _fsExtra2.default.copy(from, to, function (err) {
                     if (err) return console.error(err);
-                    console.log('Boilerplate copied to destination!');
+                    !_commander2.default.silent && console.log('Boilerplate copied to destination!');
                     _this2.postCopy(to);
                 });
             };
 
             if (!bp) {
-                return console.log('Boilerplate not found...');
+                return !_commander2.default.silent && console.log('Boilerplate not found...');
             }
 
             _fsExtra2.default.readdir(options.path, function (err, items) {
@@ -182,16 +182,16 @@ var Wilfred = function () {
                     hookError = false;
 
                 cmd.stdout.on('data', function (chunk) {
-                    process.stdout.write('[.' + PKG.name + 'hook] ' + chunk);
+                    !_commander2.default.silent && process.stdout.write('[.' + PKG.name + 'hook] ' + chunk);
                 });
 
                 cmd.stderr.on('data', function (chunk) {
-                    process.stderr.write(chunk.toString());
+                    !_commander2.default.silent && process.stderr.write(chunk.toString());
                 });
 
                 cmd.on('close', function (code, signal) {
                     if (code > 0) {
-                        console.error(('An error occured while running .' + PKG.name + 'hook').red);
+                        !_commander2.default.silent && console.error(('An error occured while running .' + PKG.name + 'hook').red);
                     }
                 });
             });
@@ -207,7 +207,7 @@ var Wilfred = function () {
                 });
                 _fsExtra2.default.writeFile(CONFIG_PATH, JSON.stringify(_this3.config, null, '  '), function (err) {
                     if (err) throw err;
-                    console.log(name, 'removed from boilerplates!');
+                    !_commander2.default.silent && console.log(name, 'removed from boilerplates!');
                 });
             };
 
