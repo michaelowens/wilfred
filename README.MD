@@ -21,7 +21,7 @@ For more information on how to use wilfred run `wilfred --help`
 - [x] Local folders
 - [x] Interactive and non-interactive mode<sup>[1](#footnote1)</sup>
 - [ ] GitHub support
-- [ ] `.wilfredrc` for commands to run after copy
+- [ ] `.wilfredhook` for commands to run after copy
 - [ ] `.wilfredignore` for files to ignore during copy (maybe?)
 
 <sub><sup><a name="footnote1">1</a>: If you pass in the boilerplate name as argument it will run non-interactive. If you don't it will run in interactive mode.</sup></sub>
