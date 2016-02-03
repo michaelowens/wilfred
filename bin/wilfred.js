@@ -45,7 +45,7 @@ var Wilfred = function () {
 
         this.config = config;
 
-        if (this.config.boilerplates.length <= 0 && (_commander2.default.remove || _commander2.default.add || _commander2.default.list)) {
+        if (this.config.boilerplates.length <= 0 && (_commander2.default.remove || !_commander2.default.add || _commander2.default.list)) {
             console.log('No boilerplates added. For more usage info run: ' + PKG.name + ' --help');
             return;
         }

@@ -4,6 +4,10 @@ A local boilerplate manager. Add folders as boilerplates and initialize projects
 
 ![Wilfred](preview.png)
 
+## What exactly is Wilfred?
+
+Wilfred is a simple [boilerplate](https://en.wikipedia.org/wiki/Boilerplate_code) manager. Similar to yeoman, but works with local folders. Add an existing folder as boilerplate and you're ready to go, no internet required.
+
 ## Installation
 
 `npm install -g wilfred`
@@ -11,3 +15,13 @@ A local boilerplate manager. Add folders as boilerplates and initialize projects
 ## Usage
 
 For more information on how to use wilfred run `wilfred --help`
+
+## Features
+
+- [x] Local folders
+- [x] Interactive and non-interactive mode<sup>[1](#footnote1)</sup>
+- [ ] GitHub support
+- [ ] `.wilfredrc` for commands to run after copy
+- [ ] `.wilfredignore` for files to ignore during copy (maybe?)
+
+<sub><sup><a name="footnote1">1</a>: If you pass in the boilerplate name as argument it will run non-interactive. If you don't it will run in interactive mode.</sup></sub>
