@@ -8,6 +8,10 @@ A local boilerplate manager. Add folders as boilerplates and initialize projects
 
 Wilfred is a simple [boilerplate](https://en.wikipedia.org/wiki/Boilerplate_code) manager. Similar to yeoman, but works with local folders. Add an existing folder as boilerplate and you're ready to go, no internet required.
 
+## Requirements
+
+Node v4 or higher
+
 ## Installation
 
 `npm install -g wilfred`
